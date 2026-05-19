@@ -1,3 +1,4 @@
+ARG REPOSITORY="docker.io"
 FROM ${REPOSITORY}/library/alpine:3.19 AS builder
 RUN apk add --no-cache python3 python3-dev py3-pip gcc musl-dev libffi-dev openssl-dev make
 
