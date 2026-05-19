@@ -43,4 +43,4 @@ jobs:
             linux/amd64
           push: true
           tags: |
-            ${{ env.DOCKER_ORG }}/${{ steps.meta.outputs.REPO_NAME }}:${{date +"%Y-%m-%d}}-${{ steps.meta.outputs.SHA_SHORT }}
+            ${{ env.DOCKER_ORG }}/${{ steps.meta.outputs.REPO_NAME }}:${{ steps.meta.outputs.SHA_SHORT }}
