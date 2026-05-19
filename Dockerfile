@@ -18,6 +18,8 @@ COPY --from=builder /etc/group /etc/group
 
 COPY --from=builder /opt/venv /opt/venv
 
+COPY --chown=root:root --chmod=755 src/rootfs /
+
 RUN mkdir -p /home/ansible/.ansible && \
     chown -R ansible:ansible /home/ansible
 
@@ -30,4 +32,5 @@ WORKDIR /home/ansible
 #install community postgresql module
 RUN ansible-galaxy collection install community.postgresql
 
-ENTRYPOINT ["ansible"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["ansible-playbook", "--version"]
