@@ -27,4 +27,7 @@ ENV HOME="/home/ansible"
 USER ansible
 WORKDIR /home/ansible
 
+#install community postgresql module
+RUN ansible-galaxy collection install community.postgresql
+
 ENTRYPOINT ["ansible"]
