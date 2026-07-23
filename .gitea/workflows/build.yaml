@@ -28,7 +28,11 @@ jobs:
         id: meta
         run: |
           echo REPO_NAME=$(echo ${GITHUB_REPOSITORY} | awk -F"/" '{print tolower($2)}') >> $GITHUB_OUTPUT
-          echo SHA_SHORT=$(git rev-parse --short HEAD) >> $GITHUB_OUTPUT
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            echo SHA_SHORT=${GITHUB_REF_NAME} >> $GITHUB_OUTPUT
+          else
+            echo SHA_SHORT=$(git rev-parse --short HEAD) >> $GITHUB_OUTPUT
+          fi
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 #tag: v6.2.0
@@ -51,7 +55,8 @@ jobs:
           platforms: |
             linux/amd64
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ env.DOCKER_ORG }}/${{ steps.meta.outputs.REPO_NAME }}:${{ steps.meta.outputs.SHA_SHORT }}
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -60,4 +65,5 @@ jobs:
           platforms: |
             linux/amd64
           push: true
-          tags: ${{ env.DOCKER_ORG }}/${{ steps.meta.outputs.REPO_NAME }}-gha:${{ steps.meta.outputs.SHA_SHORT }}
+          tags: |
+            ${{ env.DOCKER_ORG }}/${{ steps.meta.outputs.REPO_NAME }}-gha:${{ steps.meta.outputs.SHA_SHORT }}
