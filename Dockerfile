@@ -36,4 +36,6 @@ ENTRYPOINT ["/entrypoint.sh"]
 CMD ["ansible-playbook", "--version"]
 
 FROM ci as cigha
+USER root
 RUN apk add --no-cache gpg git nodejs npm yq
+USER ansible
