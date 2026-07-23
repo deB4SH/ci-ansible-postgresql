@@ -37,5 +37,5 @@ CMD ["ansible-playbook", "--version"]
 
 FROM ci as cigha
 USER root
-RUN apk add --no-cache gpg git nodejs npm yq
+RUN apk add --no-cache bash gpg git nodejs npm yq
 USER ansible
