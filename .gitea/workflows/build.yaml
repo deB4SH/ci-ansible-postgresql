@@ -33,14 +33,6 @@ jobs:
           else
             echo SHA_SHORT=$(git rev-parse --short HEAD) >> $GITHUB_OUTPUT
           fi
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 #tag: v6.2.0
-        with:
-          images: ${{ env.DOCKER_ORG }}/${{ steps.meta.outputs.REPO_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=tag
       - name: Login
         uses: docker/login-action@v3
         with:
