@@ -10,7 +10,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --no-cache-dir ansible-core
 
 #build final image
-FROM ${REPOSITORY}/library/alpine:3.19
+FROM ${REPOSITORY}/library/alpine:3.19 as ci
 RUN apk add --no-cache python3 openssh-client
 
 COPY --from=builder /etc/passwd /etc/passwd
@@ -34,3 +34,6 @@ RUN ansible-galaxy collection install community.postgresql
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["ansible-playbook", "--version"]
+
+FROM ci as cigha
+RUN apk add --no-cache gpg git nodejs npm yq
