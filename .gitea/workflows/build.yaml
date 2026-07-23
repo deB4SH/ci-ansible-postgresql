@@ -47,6 +47,7 @@ jobs:
           platforms: |
             linux/amd64
           push: true
+          target: ci
           tags: |
             ${{ env.DOCKER_ORG }}/${{ steps.meta.outputs.REPO_NAME }}:${{ steps.meta.outputs.SHA_SHORT }}
       - name: Build and push
@@ -57,5 +58,6 @@ jobs:
           platforms: |
             linux/amd64
           push: true
+          target: cigha
           tags: |
             ${{ env.DOCKER_ORG }}/${{ steps.meta.outputs.REPO_NAME }}-gha:${{ steps.meta.outputs.SHA_SHORT }}
