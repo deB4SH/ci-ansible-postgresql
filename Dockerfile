@@ -31,6 +31,8 @@ WORKDIR /home/ansible
 
 #install community postgresql module
 RUN ansible-galaxy collection install community.postgresql
+#install common plugin for manaing linux hosts
+RUN ansible-galaxy collection install ansible.posix
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["ansible-playbook", "--version"]
